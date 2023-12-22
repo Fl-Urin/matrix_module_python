@@ -1,6 +1,6 @@
 import unittest
 from unittest import TestCase
-from int_to_roman import ROMAN
+from roman_rec import roman_rec as ROMAN
 
 class PulbicTestSuite(TestCase):
     def test_zero_error(self):
