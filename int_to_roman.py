@@ -5,27 +5,19 @@ def ROMAN(num:int)->str:
     int_to_roman_dict(), dict_to_roman()
     """
 
-    d = {1000: "M", 100:"C", 10:"X", 1:"I"}
     d_full = {1000: "M", 500:"D", 100:"C", 50:"L", 10:"X", 5:"V", 1:"I"}
     lst = [val for val in d_full.values()][::-1]
+    base_10 = {1000: "M",100:"C", 10:"X",1:"I"}
 
     def int_to_roman_dict(num:int)->dict:
         """find the roman representation of any integer number"""
         assert isinstance(num, int)
         assert num != 0
 
-        def find_biggest_below(num:int)->int:
-            """
-            find the largest number that is representable in the roman number system
-            {1000: "M", 500:"D", 100:"C", 50:"L", 10:"X", 5:"V", 1:"I"}
-            """
-            return max(val for val in set(d.keys()) if num>=val)
-
-        sol = {ro: 0 for ro in d.values()}
-        while num > 0:
-            roman = find_biggest_below(num)
-            num = num - roman
-            sol[d[roman]] += 1
+        #adapt 04d and 10000 to whatever is defined
+        num = f"{num:04d}" if num<10**(len(base_10)+1) else str(num)
+        sol = {ro: int(num[-1*len(base_10):][idx]) for idx,ro in enumerate(base_10.values())}
+        sol[lst[-1]] = int(num[:-1*len(base_10)+1])
         return sol
     
     def dict_to_roman(roman_dict: dict)->str:
@@ -45,5 +37,3 @@ def ROMAN(num:int)->str:
 
         return roman_string
     return dict_to_roman(int_to_roman_dict(num))
-
-print(ROMAN(99))
